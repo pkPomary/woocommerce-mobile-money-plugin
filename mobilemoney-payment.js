@@ -23,7 +23,7 @@
             code = mmpayment_data.atmoney_ussd_code;
         }
         if(code != ""){
-            var message = "Composez <b>" +  code + "</b>";
+            var message = "Dial <b>" +  code + "</b>";
             $("#mm_instruction").html(message);
         }
     }
