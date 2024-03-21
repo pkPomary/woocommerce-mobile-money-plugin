@@ -149,7 +149,7 @@ function init_mobilemoney_payment() {
             echo 
             "<fieldset>
             <p id='mm_operator_field' class='form-row form-row-wide'>
-                <label>Please make a deposit of ".$woocommerce->cart->get_cart_total()." sur l'un des numéros ci-dessous : </label> 
+                <label>Please make a deposit of ".$woocommerce->cart->get_cart_total()." on one of the numbers below : </label> 
                 <select name='mm_operator'>
                 ";
 
