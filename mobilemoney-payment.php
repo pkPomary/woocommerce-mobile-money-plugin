@@ -157,10 +157,10 @@ function init_mobilemoney_payment() {
                     echo '<option value="MTN Money">MTN Money ('. $this->get_option( 'mtnmoney_msisdn') .')</option>';
                 }
                 if($this->get_option( 'telecelmoney_msisdn') != ""){
-                    echo '<option value="Orange Money">Orange Money ('. $this->get_option( 'telecelmoney_msisdn') .')</option>';
+                    echo '<option value="Telecel Cash">Telecel Cash ('. $this->get_option( 'telecelmoney_msisdn') .')</option>';
                 }
                 if($this->get_option( 'atmoney_msisdn') != ""){
-                    echo '<option value="Moov Money">Moov Money ('. $this->get_option( 'atmoney_msisdn') .')</option>';
+                    echo '<option value="AT Money">AT Money ('. $this->get_option( 'atmoney_msisdn') .')</option>';
                 }
                 
                 
@@ -173,7 +173,7 @@ function init_mobilemoney_payment() {
                 <input type="text" class="input-text " name="mm_sender_msisdn" placeholder="Number that made the deposit" value="">
             </p>
             <p class="form-row form-row-wide validate-required">
-                <label>ID de la transaction <abbr class="required" title="obligatory">*</abbr></label>
+                <label>Transaction ID <abbr class="required" title="obligatory">*</abbr></label>
                 <input type="text" autocomplete="off" class="input-text " name="mm_transaction_id" placeholder="Find this ID in the confirmation SMS" value="">
             </p>
             </fieldset>'; 
