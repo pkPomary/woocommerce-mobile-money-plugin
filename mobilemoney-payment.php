@@ -24,9 +24,9 @@ function mobilemoney_payment( $gateways ) {
 add_action( 'woocommerce_admin_order_data_after_billing_address', 'mmpayment_display_admin_order_meta', 10, 1 );
 
 function mmpayment_display_admin_order_meta($order){
-    echo '<p><strong>'.__('Opérateur Mobile Money').':</strong> ' . get_post_meta( $order->id, 'Operateur Mobile Money', true ) . '</p>';
-    echo '<p><strong>'.__('Numéro Mobile Money').':</strong> ' . get_post_meta( $order->id, 'Numéro Mobile Money', true ) . '</p>';
-    echo '<p><strong>'.__('ID transaction Mobile Money').':</strong> ' . get_post_meta( $order->id, 'ID transaction Mobile Money', true ) . '</p>';
+    echo '<p><strong>'.__('Mobile Money Operator').':</strong> ' . get_post_meta( $order->id, 'Mobile Money Operator', true ) . '</p>';
+    echo '<p><strong>'.__('Mobile Money Number').':</strong> ' . get_post_meta( $order->id, 'Mobile Money Number', true ) . '</p>';
+    echo '<p><strong>'.__('Mobile Money transaction ID').':</strong> ' . get_post_meta( $order->id, 'Mobile Money transaction ID', true ) . '</p>';
 }
 
 /*
@@ -46,7 +46,7 @@ function init_mobilemoney_payment() {
             $this->icon = plugins_url( 'mmoney-icons.png', __FILE__ ); // URL of the icon that will be displayed on checkout page near your gateway name
             $this->has_fields = true; // in case you need a custom credit card form
             $this->method_title = 'Mobile Money Payment';
-            $this->method_description = 'Payez à partir de votre compte mobile money'; // will be displayed on the options page
+            $this->method_description = 'Pay from your mobile money account'; // will be displayed on the options page
          
             // gateways can support subscriptions, refunds, saved payment methods,
             // but in this tutorial we begin with simple payments
@@ -95,43 +95,43 @@ function init_mobilemoney_payment() {
                 'icon_url' => array(
                     'title'       => 'Icon URL',
                     'type'        => 'text',
-                    'description' => "Lien de l'icone que l'utilisateur verra",
+                    'description' => "Link of the icon that the user will see",
                 ),
                 'description' => array(
                     'title'       => 'Description',
                     'type'        => 'textarea',
                     'description' => 'This controls the description which the user sees during checkout.',
-                    'default'     => 'Payez à partir de votre compte mobile money',
+                    'default'     => 'Pay from your mobile money account',
                 ),
                 'mtnmoney_msisdn' => array(
-                    'title'       => 'Numéro MTN Money',
+                    'title'       => 'MTN Money Number',
                     'type'        => 'text',
-                    'default'     => '05000000',
+                    'default'     => '0246128647',
                 ),
                 'mtnmoney_ussd_code' => array(
-                    'title'       => 'Code USSD MTN Money',
+                    'title'       => 'MTN Money USSD Code',
                     'type'        => 'text',
-                    'default'     => '*133#',
+                    'default'     => '*170#',
                 ),
-                'orangemoney_msisdn' => array(
-                    'title'       => 'Numéro Orange Money',
+                'telecelmoney_msisdn' => array(
+                    'title'       => 'Telecel Cash Number',
                     'type'        => 'text',
-                    'default'     => '08000000',
+                    'default'     => '0246128647',
                 ),
-                'orangemoney_ussd_code' => array(
-                    'title'       => 'Code USSD Orange Money',
+                'telecelmoney_ussd_code' => array(
+                    'title'       => 'Telecel Cash USSD Code',
                     'type'        => 'text',
-                    'default'     => '*144#',
+                    'default'     => '*110#',
                 ),
-                'moovmoney_msisdn' => array(
-                    'title'       => 'Numéro Moov Money',
+                'atmoney_msisdn' => array(
+                    'title'       => 'AT Money Number',
                     'type'        => 'text',
-                    'default'     => '01000000',
+                    'default'     => '0246128647',
                 ),
-                'moovmoney_ussd_code' => array(
-                    'title'       => 'Code USSD Moov Money',
+                'atmoney_ussd_code' => array(
+                    'title'       => 'AT Money USSD Code',
                     'type'        => 'text',
-                    'default'     => '*155#',
+                    'default'     => '*111#',
                 )
             );
  
@@ -156,11 +156,11 @@ function init_mobilemoney_payment() {
                 if($this->get_option( 'mtnmoney_msisdn') != ""){
                     echo '<option value="MTN Money">MTN Money ('. $this->get_option( 'mtnmoney_msisdn') .')</option>';
                 }
-                if($this->get_option( 'orangemoney_msisdn') != ""){
-                    echo '<option value="Orange Money">Orange Money ('. $this->get_option( 'orangemoney_msisdn') .')</option>';
+                if($this->get_option( 'telecelmoney_msisdn') != ""){
+                    echo '<option value="Orange Money">Orange Money ('. $this->get_option( 'telecelmoney_msisdn') .')</option>';
                 }
-                if($this->get_option( 'moovmoney_msisdn') != ""){
-                    echo '<option value="Moov Money">Moov Money ('. $this->get_option( 'moovmoney_msisdn') .')</option>';
+                if($this->get_option( 'atmoney_msisdn') != ""){
+                    echo '<option value="Moov Money">Moov Money ('. $this->get_option( 'atmoney_msisdn') .')</option>';
                 }
                 
                 
@@ -169,12 +169,12 @@ function init_mobilemoney_payment() {
             <span id="mm_instruction"></span>
             </p>
             <p class="form-row form-row-wide validate-required">
-                <label>Numéro Mobile Money <abbr class="required" title="obligatoire">*</abbr></label>
-                <input type="text" class="input-text " name="mm_sender_msisdn" placeholder="Numéro ayant éffectué le dépot" value="">
+                <label>Mobile Money Number <abbr class="required" title="obligatory">*</abbr></label>
+                <input type="text" class="input-text " name="mm_sender_msisdn" placeholder="Number that made the deposit" value="">
             </p>
             <p class="form-row form-row-wide validate-required">
-                <label>ID de la transaction <abbr class="required" title="obligatoire">*</abbr></label>
-                <input type="text" autocomplete="off" class="input-text " name="mm_transaction_id" placeholder="Retrouvez ce ID dans le SMS de confirmation" value="">
+                <label>ID de la transaction <abbr class="required" title="obligatory">*</abbr></label>
+                <input type="text" autocomplete="off" class="input-text " name="mm_transaction_id" placeholder="Find this ID in the confirmation SMS" value="">
             </p>
             </fieldset>'; 
  
@@ -200,8 +200,8 @@ function init_mobilemoney_payment() {
             wp_localize_script( 'mmpayment_js', 'mmpayment_data', 
                 array( 
                 'mtnmoney_ussd_code' => $this->get_option( 'mtnmoney_ussd_code' ),
-                'orangemoney_ussd_code'=> $this->get_option( 'orangemoney_ussd_code' ),
-                'moovmoney_ussd_code' => $this->get_option( 'moovmoney_ussd_code' )
+                'telecelmoney_ussd_code'=> $this->get_option( 'telecelmoney_ussd_code' ),
+                'atmoney_ussd_code' => $this->get_option( 'atmoney_ussd_code' )
                 ) 
             );
 
@@ -214,12 +214,12 @@ function init_mobilemoney_payment() {
  
  
                 if( empty( $_POST[ 'mm_sender_msisdn' ]) ) {
-                    wc_add_notice(  'Le numéro de téléphone est obligatoire !', 'error' );
+                    wc_add_notice(  'The telephone number is obligatory!', 'error' );
                     return false;
                 }
 
                 if( empty( $_POST[ 'mm_transaction_id' ]) ) {
-                    wc_add_notice(  "Veuillez préciser l'ID de la transaction !", 'error' );
+                    wc_add_notice(  "Please specify the transaction ID!", 'error' );
                     return false;
                 }
 
@@ -236,12 +236,12 @@ function init_mobilemoney_payment() {
             $order = new WC_Order( $order_id );
 
             // Save additional fields
-            $order->update_meta_data( 'Operateur Mobile Money', sanitize_text_field( $_POST['mm_operator'] ) );
-            $order->update_meta_data( 'Numéro Mobile Money', sanitize_text_field( $_POST['mm_sender_msisdn'] ) );
-            $order->update_meta_data( 'ID transaction Mobile Money', sanitize_text_field( $_POST['mm_transaction_id'] ) );
+            $order->update_meta_data( 'Mobile Money Operator', sanitize_text_field( $_POST['mm_operator'] ) );
+            $order->update_meta_data( 'Mobile Money Number', sanitize_text_field( $_POST['mm_sender_msisdn'] ) );
+            $order->update_meta_data( 'Mobile Money transaction ID', sanitize_text_field( $_POST['mm_transaction_id'] ) );
         
             // Mark as on-hold (we're awaiting the cheque)
-            $order->update_status('on-hold', __( 'En attente de confirmation.', 'woocommerce' ));
+            $order->update_status('on-hold', __( 'Waiting for confirmation.', 'woocommerce' ));
         
             // Remove cart
             $woocommerce->cart->empty_cart();
