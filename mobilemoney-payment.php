@@ -106,7 +106,7 @@ function init_mobilemoney_payment() {
                 'mtnmoney_msisdn' => array(
                     'title'       => 'MTN Money Number',
                     'type'        => 'text',
-                    'default'     => '0246128647',
+                    'default'     => '0240000000',
                 ),
                 'mtnmoney_ussd_code' => array(
                     'title'       => 'MTN Money USSD Code',
@@ -116,7 +116,7 @@ function init_mobilemoney_payment() {
                 'telecelmoney_msisdn' => array(
                     'title'       => 'Telecel Cash Number',
                     'type'        => 'text',
-                    'default'     => '0246128647',
+                    'default'     => '0200000000',
                 ),
                 'telecelmoney_ussd_code' => array(
                     'title'       => 'Telecel Cash USSD Code',
@@ -126,7 +126,7 @@ function init_mobilemoney_payment() {
                 'atmoney_msisdn' => array(
                     'title'       => 'AT Money Number',
                     'type'        => 'text',
-                    'default'     => '0246128647',
+                    'default'     => '0260000000',
                 ),
                 'atmoney_ussd_code' => array(
                     'title'       => 'AT Money USSD Code',
